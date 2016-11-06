@@ -1,0 +1,21 @@
+
+---
+- name: Run playbook
+  hosts: all
+  become: yes
+
+  roles:
+    - role: jdauphant.nginx
+    - role: jenkins_deploy
+  vars:
+    nginx_sites:
+      default:
+        - listen 80
+        - location / { proxy_pass http://127.0.0.1:8080; }
+    jenkins_plugins:
+      - ansible
+      - github
+      - github-oauth
+      - simple-theme-plugin
+      - slack
+      - workflow-aggregator

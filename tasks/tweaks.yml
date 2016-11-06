@@ -1,0 +1,6 @@
+- name: Configure UI tweak
+  template:
+    src: simpletheme.xml.j2
+    dest: "{{ jenkins_home }}/org.codefirst.SimpleThemeDecorator.xml"
+  when: "'{{ jenkins_deploy_css_url }}' != '' or '{{ jenkins_deploy_js_url }}' != '' "
+  notify: restart jenkins

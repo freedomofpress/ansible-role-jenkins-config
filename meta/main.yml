@@ -1,0 +1,22 @@
+galaxy_info:
+  author: jenkins_deploy
+  description: Jenkins deploy
+
+  company: Freedom of the Press Foundation
+
+  license: MIT
+
+  min_ansible_version: 2.1
+
+  platforms:
+  - name: Debian
+    versions:
+    - jessie
+    - sid
+
+  galaxy_tags: []
+    - jenkins
+    - CI
+
+dependencies:
+  - geerlingguy.jenkins
