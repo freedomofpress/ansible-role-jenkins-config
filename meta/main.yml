@@ -14,7 +14,7 @@ galaxy_info:
     - jessie
     - sid
 
-  galaxy_tags: []
+  galaxy_tags:
     - jenkins
     - CI
 

@@ -1,0 +1,7 @@
+
+- name: Drop any groovy scripts
+  template:
+    src: "{{ item }}.groovy.j2"
+    dest: "{{ jenkins_home }}/init.groovy.d/{{ item }}.groovy"
+  with_items: "{{ jenkins_deploy_groovy }}"
+  notify: restart jenkins

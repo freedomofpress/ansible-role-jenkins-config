@@ -1,0 +1,18 @@
+import hudson.security.SecurityRealm
+import jenkins.model.Jenkins
+import org.jenkinsci.plugins.GithubSecurityRealm
+
+def instance = Jenkins.getInstance()
+
+String githubWebUri = '{{ jenkins_deploy_gh_oauth.url }}'
+String githubApiUri = '{{ jenkins_deploy_gh_oauth.api_url }}'
+String clientID = '{{ jenkins_deploy_gh_oauth.client_id }}'
+String clientSecret = '{{ jenkins_deploy_gh_oauth.secret_id }}'
+String oauthScopes = '{{ jenkins_deploy_gh_oauth.scope }}'
+SecurityRealm github_realm = new GithubSecurityRealm(githubWebUri, githubApiUri, clientID, clientSecret, oauthScopes)
+
+//check for equality, no need to modify the runtime if no settings changed
+if(!github_realm.equals(instance.getSecurityRealm())) {
+    instance.setSecurityRealm(github_realm)
+    instance.save()
+}
