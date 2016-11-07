@@ -2,10 +2,13 @@
 jenkins_deploy_css_url: https://jenkins-contrib-themes.github.io/jenkins-material-theme/dist/material-blue.css
 jenkins_deploy_js_url: ""
 
-jenkins_deploy_groovy:
-  - github_auth
-  - github_auth_strategy
+jenkins_deploy_groovy: []
+#  - github_auth
+#  - github_auth_strategy
 
+# These github auth settings wont be utilized unless
+#   the groovy scripts listed above are deployed
+#   ( the data below is bogus and specifically use your own ids here)
 jenkins_deploy_gh_oauth:
   url: https://github.com
   api_url: https://api.github.com
