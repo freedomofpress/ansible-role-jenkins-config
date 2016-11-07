@@ -6,7 +6,7 @@
 
   roles:
     - role: jdauphant.nginx
-    - role: jenkins_deploy
+    - role: ansible_jenkins_config
   vars:
     nginx_sites:
       default:
