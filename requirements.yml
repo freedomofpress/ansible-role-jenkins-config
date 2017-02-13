@@ -1,5 +1,7 @@
 ---
 - src: geerlingguy.jenkins
 
-- name: jdauphant.nginx
+- src: jdauphant.nginx
 
+- name: freedomofpress.openssl-node
+  src: https://github.com/freedomofpress/ansible-role-openssl-node.git
