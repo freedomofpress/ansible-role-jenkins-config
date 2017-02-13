@@ -1,7 +1,6 @@
 ---
 ansible:
-  verbose: vv
-  diff: yes
+  diff: no
   config_file: ansible.cfg
 
 vagrant:
