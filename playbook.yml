@@ -15,8 +15,10 @@
         - "{{ jenkins_nginx_root }}"
     jenkins_plugins:
       - ansible
+      - ec2
       - github
       - github-oauth
       - simple-theme-plugin
       - slack
+      - ssh-credentials
       - workflow-aggregator

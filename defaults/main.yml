@@ -24,6 +24,19 @@ jenkins_deploy_gh_oauth_strategy:
   github_webhook: true
   authread_all: true
 
+jenkins_deploy_ssh_files: []
+# - keyname: mykey
+#   username: root
+#   privkey: Asdjadsoijadjasdlkajdljadjs
+#   passphrase: yay
+#   description: 'This is my key for service x'
+
+jenkins_deploy_aws_keys: []
+# - id: jenkinsawskey
+#   key: ASdoKJDASDOAJD
+#   secret: ASDJADKJAKDLSAJDLKAJDLSAJDLAS
+#   desc: "Jenkins AWS user for EC2 building"
+
 jenkins_nginx_usercontent: |
   location /userContent {
     root {{ jenkins_home }}/;

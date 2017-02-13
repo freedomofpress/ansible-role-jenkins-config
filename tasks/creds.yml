@@ -1,0 +1,26 @@
+---
+- name: Ensure jenkins creds sshdirectory exists
+  file:
+    state: directory
+    path: "{{ jenkins_home }}/.ssh/"
+    owner: jenkins
+    group: jenkins
+    mode: 0700
+
+- name: Copy over any ssh config files
+  copy:
+    content: "{{ item.privkey }}"
+    dest: "{{ jenkins_home }}/.ssh/{{ item.keyname }}"
+    owner: jenkins
+    group: jenkins
+    mode: 0700
+  no_log: true
+  register: register_copyssh
+  with_items: "{{ jenkins_deploy_ssh_files }}"
+
+- name: Drop groovy create scripts
+  template:
+    dest: "{{ jenkins_home }}/init.groovy.d/creds.groovy"
+    src: "creds.groovy"
+  notify: restart jenkins
+
