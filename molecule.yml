@@ -12,6 +12,8 @@ vagrant:
     - name: virtualbox
       type: virtualbox
 
+    - name: libvirt
+      type: libvirt
       options:
         memory: 2048
 
