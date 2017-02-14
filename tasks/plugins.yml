@@ -1,0 +1,11 @@
+---
+# Handle plugins from hpi files
+#
+# This is supplemental to the plugin logic in the jenkins role in case
+# you need to install plugins that are custom compiled or not in update site.
+- name: Copy over custom plugin(s)
+  copy:
+    src: "{{ item }}"
+    dest: "{{ jenkins_home }}/plugins/"
+  notify: restart jenkins
+  with_items: "{{ jenkins_deploy_plugin_files }}"

@@ -4,3 +4,5 @@
 - include: creds.yml
 
 - include: groovy.yml
+
+- include: plugins.yml
