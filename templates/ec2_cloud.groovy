@@ -7,7 +7,9 @@
 import hudson.model.*
 import jenkins.model.*
 import hudson.plugins.ec2.*
+{% if jenkins_deploy_ec2_clouds %}
 import com.amazonaws.services.ec2.model.InstanceType
+{% endif %}
 
 def instance = Jenkins.getInstance()
 

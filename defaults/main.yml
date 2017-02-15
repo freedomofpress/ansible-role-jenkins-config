@@ -2,6 +2,9 @@
 jenkins_deploy_css_url: https://jenkins-contrib-themes.github.io/jenkins-material-theme/dist/material-blue.css
 jenkins_deploy_js_url: ""
 
+jenkins_deploy_config_master_exe: 0
+jenkins_deploy_config_disableusage_stats: true
+
 jenkins_deploy_groovy: []
 #  - github_auth
 #  - github_auth_strategy
@@ -9,20 +12,20 @@ jenkins_deploy_groovy: []
 # These github auth settings wont be utilized unless
 #   the groovy scripts listed above are deployed
 #   ( the data below is bogus and specifically use your own ids here)
-jenkins_deploy_gh_oauth:
-  url: https://github.com
-  api_url: https://api.github.com
-  client_id: 12314124412
-  secret_id: 23424324324
-  scope: "read:org"
+jenkins_deploy_gh_oauth: {}
+#  url: https://github.com
+#  api_url: https://api.github.com
+#  client_id: 12314124412
+#  secret_id: 23424324324
+#  scope: "read:org"
 
-jenkins_deploy_gh_oauth_strategy:
-  admins:
-    - msheiny
-  organizations:
-    - organization
-  github_webhook: true
-  authread_all: true
+jenkins_deploy_gh_oauth_strategy: {}
+#  admins:
+#    - msheiny
+#  organizations:
+#    - organization
+#  github_webhook: true
+#  authread_all: true
 
 jenkins_deploy_ssh_files: []
 # - keyname: mykey
