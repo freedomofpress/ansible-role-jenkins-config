@@ -110,5 +110,12 @@ def new_cloud = new AmazonEC2Cloud(
   worker_amis
 )
 
-instance.clouds.add(new_cloud)
+def cloudList = instance.clouds
+
+// avoid duplicate cloud provider on the cloud list
+// pulled from https://gist.github.com/xbeta/e5edcf239fcdbe3f1672
+if ( ! cloudList.getByName("ec2-{{ cloud.name }}") ) {
+    cloudList.add(new_cloud)
+}
+
 {% endfor %}
