@@ -5,7 +5,7 @@ import com.cloudbees.plugins.credentials.domains.*
 import com.cloudbees.plugins.credentials.impl.*
 import com.cloudbees.jenkins.plugins.sshcredentials.impl.*
 import hudson.plugins.sshslaves.*;
-{% if "ec2" in jenkins_plugins -%}
+{% if jenkins_deploy_aws_keys -%}
 import com.cloudbees.jenkins.plugins.awscredentials.AWSCredentialsImpl
 {% endif %}
 

@@ -39,6 +39,25 @@ jenkins_deploy_aws_keys: []
 
 jenkins_deploy_plugin_files: []
 
+jenkins_deploy_ec2_clouds: []
+#  - name: MyEC2Cloud
+#    credential_id: awscredid
+#    instance_cap: 5
+#    region: us-east-1
+#    private_key: "{{ ssh_private_key }}"
+#    workers:
+#      - ami_id: asdadaisdo
+#        description: UbuntuWorker
+#        security_groups: SSHSG
+#        remote_fs_root: /home/jenkins/workspace
+#        ebs_optimized: false
+#        instance_type: t2.small
+#        labels: aws-builders
+#        mode: normal # NORMAL = Utilize as much as possible, EXCLUSIVE = only for tied jobs
+#        executors: 1
+#        remoteadmin: jenkins
+#        connectsshprocess: true
+
 jenkins_nginx_usercontent: |
   location /userContent {
     root {{ jenkins_home }}/;

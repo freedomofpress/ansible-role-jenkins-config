@@ -1,4 +1,11 @@
 ---
+- name: Drop any groovy scripts
+  template:
+    src: "{{ item }}.groovy.j2"
+    dest: "{{ jenkins_home }}/init.groovy.d/{{ item }}.groovy"
+  with_items: "{{ jenkins_deploy_groovy }}"
+  notify: restart jenkins
+
 - name: Ensure jenkins creds sshdirectory exists
   file:
     state: directory
@@ -21,6 +28,12 @@
 - name: Drop groovy create scripts
   template:
     dest: "{{ jenkins_home }}/init.groovy.d/creds.groovy"
-    src: "creds.groovy"
+    src: "creds.groovy.j2"
   notify: restart jenkins
 
+- name: Drop ec2create scripts
+  template:
+    dest: "{{ jenkins_home }}/init.groovy.d/ec2_cloud.groovy"
+    src: "ec2_cloud.groovy.j2"
+  when: jenkins_deploy_ec2_clouds != []
+  notify: restart jenkins
