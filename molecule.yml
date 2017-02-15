@@ -1,7 +1,6 @@
 ---
 ansible:
-  verbose: vv
-  diff: yes
+  diff: no
   config_file: ansible.cfg
 
 vagrant:
@@ -13,15 +12,14 @@ vagrant:
     - name: virtualbox
       type: virtualbox
 
+    - name: libvirt
+      type: libvirt
       options:
         memory: 2048
 
-
   instances:
     - name: jenkinsdeploy
-      interfaces:
-        - network_name: private_network
-          type: dhcp
-          auto_config: true
       raw_config_args:
         - "vm.network 'forwarded_port', guest: 80, host: 8080"
+        - "vm.network 'forwarded_port', guest: 443, host: 4443"
+        - "vm.synced_folder './', '/vagrant', disabled: true"

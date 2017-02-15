@@ -5,18 +5,32 @@
   become: yes
 
   roles:
+    - role: freedomofpress.openssl-node
+      tags: ssl
+
     - role: jdauphant.nginx
+      tags: nginx
+
     - role: ansible_jenkins_config
+      tags: jenkins
   vars:
     nginx_sites:
       default:
         - listen 80
         - "{{ jenkins_nginx_usercontent }}"
         - "{{ jenkins_nginx_root }}"
+      encrypted:
+        - listen 443 ssl
+        - ssl_certificate /etc/ssl/certs/localhost.pem
+        - ssl_certificate_key /etc/ssl/private/localhost-key.pem
+        - "{{ jenkins_nginx_usercontent }}"
+        - "{{ jenkins_nginx_root }}"
     jenkins_plugins:
       - ansible
+      - ec2
       - github
       - github-oauth
       - simple-theme-plugin
       - slack
+      - ssh-credentials
       - workflow-aggregator

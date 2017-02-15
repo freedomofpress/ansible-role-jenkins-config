@@ -2,6 +2,9 @@
 jenkins_deploy_css_url: https://jenkins-contrib-themes.github.io/jenkins-material-theme/dist/material-blue.css
 jenkins_deploy_js_url: ""
 
+jenkins_deploy_config_master_exe: 0
+jenkins_deploy_config_disableusage_stats: true
+
 jenkins_deploy_groovy: []
 #  - github_auth
 #  - github_auth_strategy
@@ -9,20 +12,54 @@ jenkins_deploy_groovy: []
 # These github auth settings wont be utilized unless
 #   the groovy scripts listed above are deployed
 #   ( the data below is bogus and specifically use your own ids here)
-jenkins_deploy_gh_oauth:
-  url: https://github.com
-  api_url: https://api.github.com
-  client_id: 12314124412
-  secret_id: 23424324324
-  scope: "read:org"
+jenkins_deploy_gh_oauth: {}
+#  url: https://github.com
+#  api_url: https://api.github.com
+#  client_id: 12314124412
+#  secret_id: 23424324324
+#  scope: "read:org"
 
-jenkins_deploy_gh_oauth_strategy:
-  admins:
-    - msheiny
-  organizations:
-    - organization
-  github_webhook: true
-  authread_all: true
+jenkins_deploy_gh_oauth_strategy: {}
+#  admins:
+#    - msheiny
+#  organizations:
+#    - organization
+#  github_webhook: true
+#  authread_all: true
+
+jenkins_deploy_ssh_files: []
+# - keyname: mykey
+#   username: root
+#   privkey: Asdjadsoijadjasdlkajdljadjs
+#   passphrase: yay
+#   description: 'This is my key for service x'
+
+jenkins_deploy_aws_keys: []
+# - id: jenkinsawskey
+#   key: ASdoKJDASDOAJD
+#   secret: ASDJADKJAKDLSAJDLKAJDLSAJDLAS
+#   desc: "Jenkins AWS user for EC2 building"
+
+jenkins_deploy_plugin_files: []
+
+jenkins_deploy_ec2_clouds: []
+#  - name: MyEC2Cloud
+#    credential_id: awscredid
+#    instance_cap: 5
+#    region: us-east-1
+#    private_key: "{{ ssh_private_key }}"
+#    workers:
+#      - ami_id: asdadaisdo
+#        description: UbuntuWorker
+#        security_groups: SSHSG
+#        remote_fs_root: /home/jenkins/workspace
+#        ebs_optimized: false
+#        instance_type: t2.small
+#        labels: aws-builders
+#        mode: normal # NORMAL = Utilize as much as possible, EXCLUSIVE = only for tied jobs
+#        executors: 1
+#        remoteadmin: jenkins
+#        connectsshprocess: true
 
 jenkins_nginx_usercontent: |
   location /userContent {

@@ -1,4 +1,6 @@
 ---
 - include: tweaks.yml
 
-- include: groovy.yml
+- include: config.yml
+
+- include: plugins.yml

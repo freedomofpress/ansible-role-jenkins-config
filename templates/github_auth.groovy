@@ -1,7 +1,32 @@
-{% set oauth = jenkins_deploy_gh_oauth_strategy %}
-import org.jenkinsci.plugins.GithubAuthorizationStrategy
-import hudson.security.AuthorizationStrategy
+import hudson.security.SecurityRealm
 import jenkins.model.Jenkins
+import hudson.security.AuthorizationStrategy
+{% if jenkins_deploy_gh_oauth -%}
+import org.jenkinsci.plugins.GithubSecurityRealm
+{% endif %}
+{% if jenkins_deploy_gh_oauth_strategy -%}
+import org.jenkinsci.plugins.GithubAuthorizationStrategy
+{% endif %}
+
+def instance = Jenkins.getInstance()
+
+{% if jenkins_deploy_gh_oauth %}
+String githubWebUri = '{{ jenkins_deploy_gh_oauth.url }}'
+String githubApiUri = '{{ jenkins_deploy_gh_oauth.api_url }}'
+String clientID = '{{ jenkins_deploy_gh_oauth.client_id }}'
+String clientSecret = '{{ jenkins_deploy_gh_oauth.secret_id }}'
+String oauthScopes = '{{ jenkins_deploy_gh_oauth.scope }}'
+SecurityRealm github_realm = new GithubSecurityRealm(githubWebUri, githubApiUri, clientID, clientSecret, oauthScopes)
+
+//check for equality, no need to modify the runtime if no settings changed
+if(!github_realm.equals(instance.getSecurityRealm())) {
+    instance.setSecurityRealm(github_realm)
+    instance.save()
+}
+{% endif %}
+
+{% if jenkins_deploy_gh_oauth_strategy %}
+{% set oauth = jenkins_deploy_gh_oauth_strategy %}
 
 //permissions are ordered similar to web UI
 //Admin User Names
@@ -34,7 +59,8 @@ AuthorizationStrategy github_authorization = new GithubAuthorizationStrategy(adm
     allowAnonymousJobStatusPermission)
 
 //check for equality, no need to modify the runtime if no settings changed
-if(!github_authorization.equals(Jenkins.instance.getAuthorizationStrategy())) {
-    Jenkins.instance.setAuthorizationStrategy(github_authorization)
-    Jenkins.instance.save()
+if(!github_authorization.equals(instance.getAuthorizationStrategy())) {
+    instance.setAuthorizationStrategy(github_authorization)
+    instance.save()
 }
+{% endif %}
