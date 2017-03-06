@@ -40,6 +40,12 @@ jenkins_deploy_aws_keys: []
 #   secret: ASDJADKJAKDLSAJDLKAJDLSAJDLAS
 #   desc: "Jenkins AWS user for EC2 building"
 
+jenkins_deploy_userpass_creds: []
+# - id: usernamepass
+#   username: myuser
+#   password: password
+#   description: "My user credentials"
+
 jenkins_deploy_plugin_files: []
 
 jenkins_deploy_ec2_clouds: []
