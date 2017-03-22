@@ -21,8 +21,8 @@
         - "{{ jenkins_nginx_root }}"
       encrypted:
         - listen 443 ssl
-        - ssl_certificate /etc/ssl/certs/localhost.pem
-        - ssl_certificate_key /etc/ssl/private/localhost-key.pem
+        - ssl_certificate /etc/ssl/certs/{{ ansible_fqdn }}.pem
+        - ssl_certificate_key /etc/ssl/private/{{ ansible_fqdn }}-key.pem
         - "{{ jenkins_nginx_usercontent }}"
         - "{{ jenkins_nginx_root }}"
     jenkins_plugins:
