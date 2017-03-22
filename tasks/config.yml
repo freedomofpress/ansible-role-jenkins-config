@@ -1,11 +1,23 @@
 ---
 - name: Drop any groovy scripts
   template:
-    src: "{{ item }}"
+    src: "{{ item }}.groovy"
     dest: "{{ jenkins_home }}/init.groovy.d/"
-  with_fileglob:
-    - templates/*groovy
+  when: item != 'skip'
+  register: result_groovy
+  with_items:
+    - "{{ 'github_folder' if jenkins_deploy_gh_folder else 'skip' }}"
+    - general_config
+    - creds
+    - "{{ 'ec2_cloud' if jenkins_deploy_ec2_clouds else 'skip' }}"
+    - "{{ 'github_auth' if jenkins_deploy_gh_oauth else 'skip' }}"
   notify: restart jenkins
+
+- name: Remove github folder lock if a new groovy script dropped
+  file:
+    path: "{{ jenkins_home }}/..disable-init_gh_folder"
+    state: absent
+  when: result_groovy.results[0].changed and jenkins_deploy_gh_folder
 
 - name: Ensure jenkins creds sshdirectory exists
   file:

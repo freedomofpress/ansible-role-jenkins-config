@@ -38,3 +38,15 @@ aws_cred = new AWSCredentialsImpl(
 )
 store.addCredentials(domain, aws_cred)
 {% endfor %}
+
+{% for key in jenkins_deploy_userpass_creds %}
+// USERNAME + PASSWORD CREDS
+userandpass = new UsernamePasswordCredentialsImpl(
+    CredentialsScope.GLOBAL,
+    "{{ key.id }}",
+    "{{ key.description | default('') }}",
+    "{{ key.username | default('') }}",
+    "{{ key.password }}"
+)
+store.addCredentials(domain, userandpass)
+{% endfor %}
