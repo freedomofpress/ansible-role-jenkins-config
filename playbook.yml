@@ -30,6 +30,7 @@
       - ec2
       - github
       - github-oauth
+      - github-branch-source
       - simple-theme-plugin
       - slack
       - ssh-credentials

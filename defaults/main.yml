@@ -1,17 +1,14 @@
 ---
+jenkins_home: /var/lib/jenkins
 jenkins_deploy_css_url: https://jenkins-contrib-themes.github.io/jenkins-material-theme/dist/material-blue.css
 jenkins_deploy_js_url: ""
 
 jenkins_deploy_config_master_exe: 0
 jenkins_deploy_config_disableusage_stats: true
 
-jenkins_deploy_groovy: []
-#  - github_auth
-#  - github_auth_strategy
-
-# These github auth settings wont be utilized unless
-#   the groovy scripts listed above are deployed
-#   ( the data below is bogus and specifically use your own ids here)
+#
+# Utilize GitHub Oauth for authorization and permissions
+###############################################################
 jenkins_deploy_gh_oauth: {}
 #  url: https://github.com
 #  api_url: https://api.github.com
@@ -27,6 +24,28 @@ jenkins_deploy_gh_oauth_strategy: {}
 #  github_webhook: true
 #  authread_all: true
 
+#
+# Utilize GitHub Org to populate pipeline jobs
+###############################################################
+jenkins_deploy_gh_folder: []
+#  - job_name: "GitHub Scanner"
+#    owner: mygithuborg
+#    scan_cred_id: gh_token_id
+#    health_recursive: false
+#    scan_pattern: repo_name (OR leave off for all in org)
+#    origin_branch: true
+#    origin_branch_pr: true
+#    origin_pr_merge: false
+#    origin_pr_head: false
+#    fork_pr_merge: false
+#    fork_pr_head: false
+#    prune_dead_branch: true
+#    prune_days: 0
+#    prune_number: 0
+
+#
+# Jenkins credentials
+###############################################################
 jenkins_deploy_ssh_files: []
 # - keyname: mykey
 #   username: root
@@ -48,6 +67,9 @@ jenkins_deploy_userpass_creds: []
 
 jenkins_deploy_plugin_files: []
 
+#
+# Jenkins EC2 cloud builders
+###############################################################
 jenkins_deploy_ec2_clouds: []
 #  - name: MyEC2Cloud
 #    credential_id: awscredid
@@ -67,6 +89,9 @@ jenkins_deploy_ec2_clouds: []
 #        remoteadmin: jenkins
 #        connectsshprocess: true
 
+#
+# nginx reverse proxy settings used in testing
+###############################################################
 jenkins_nginx_usercontent: |
   location /userContent {
     root {{ jenkins_home }}/;
