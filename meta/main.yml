@@ -19,4 +19,6 @@ galaxy_info:
     - CI
 
 dependencies:
-  - geerlingguy.jenkins
+  - role: geerlingguy.jenkins
+    java_packages:
+      - openjdk-8-jdk
