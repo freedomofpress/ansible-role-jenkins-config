@@ -128,3 +128,8 @@ jenkins_nginx_root: |
     proxy_busy_buffers_size    64k;
     proxy_temp_file_write_size 64k;
   }
+
+jenkins_static_configs:
+  # Disable legacy insecure CLI over remoting option
+  - src: disable.remote.cli.xml
+    dest: "{{ jenkins_home }}/jenkins.CLI.xml"

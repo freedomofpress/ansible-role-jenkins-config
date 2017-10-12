@@ -19,6 +19,15 @@
     state: absent
   when: result_groovy.results[0].changed and jenkins_deploy_gh_folder
 
+- name: Copy over static configuration files
+  copy:
+    dest: "{{ item.dest }}"
+    src: "{{ item.src }}"
+    owner: jenkins
+    group: jenkins
+    mode: 0400
+  with_items: "{{ jenkins_static_configs }}"
+
 - name: Ensure jenkins creds sshdirectory exists
   file:
     state: directory
