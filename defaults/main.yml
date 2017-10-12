@@ -133,3 +133,6 @@ jenkins_static_configs:
   # Disable legacy insecure CLI over remoting option
   - src: disable.remote.cli.xml
     dest: "{{ jenkins_home }}/jenkins.CLI.xml"
+  # Enable slave to master security system
+  - content: "false"
+    dest: "{{ jenkins_home }}/secrets/slave-to-master-security-kill-switch"
