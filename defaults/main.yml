@@ -65,6 +65,11 @@ jenkins_deploy_userpass_creds: []
 #   password: password
 #   description: "My user credentials"
 
+jenkins_slack_settings: {}
+#  domain: mydomain
+#  cred_id: slack-token
+#  room: "#fav-room"
+
 jenkins_deploy_plugin_files: []
 
 #

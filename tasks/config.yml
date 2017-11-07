@@ -11,6 +11,7 @@
     - creds
     - "{{ 'ec2_cloud' if jenkins_deploy_ec2_clouds else 'skip' }}"
     - "{{ 'github_auth' if jenkins_deploy_gh_oauth else 'skip' }}"
+    - "{{ 'slack' if jenkins_slack_settings else 'skip' }}"
   notify: restart jenkins
 
 - name: Remove github folder lock if a new groovy script dropped
