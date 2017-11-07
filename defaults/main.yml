@@ -107,6 +107,8 @@ jenkins_nginx_usercontent: |
     sendfile on;
   }
 
+jenkins_master_pkgs: []
+
 jenkins_nginx_root: |
   location / {
     sendfile off;
