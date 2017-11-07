@@ -65,6 +65,11 @@ jenkins_deploy_userpass_creds: []
 #   password: password
 #   description: "My user credentials"
 
+jenkins_deploy_secret_creds: []
+#  - id: slack-token
+#    desc: "Slack credential token"
+#    secret: "124908124908124/12489012840912/124890124021408"
+
 jenkins_slack_settings: {}
 #  domain: mydomain
 #  cred_id: slack-token

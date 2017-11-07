@@ -3,8 +3,10 @@ import com.cloudbees.plugins.credentials.*
 import com.cloudbees.plugins.credentials.common.*
 import com.cloudbees.plugins.credentials.domains.*
 import com.cloudbees.plugins.credentials.impl.*
+import org.jenkinsci.plugins.plaincredentials.impl.*
 import com.cloudbees.jenkins.plugins.sshcredentials.impl.*
 import hudson.plugins.sshslaves.*;
+import hudson.util.Secret
 {% if jenkins_deploy_aws_keys -%}
 import com.cloudbees.jenkins.plugins.awscredentials.AWSCredentialsImpl
 {% endif %}
@@ -49,4 +51,15 @@ userandpass = new UsernamePasswordCredentialsImpl(
     "{{ key.password }}"
 )
 store.addCredentials(domain, userandpass)
+{% endfor %}
+
+{% for key in jenkins_deploy_secret_creds %}
+// Secret Text
+secretText = new StringCredentialsImpl(
+    CredentialsScope.GLOBAL,
+    "{{ key.id }}",
+    "{{ key.desc }}",
+    Secret.fromString("{{ key.secret }}"))
+
+store.addCredentials(domain, secretText)
 {% endfor %}
