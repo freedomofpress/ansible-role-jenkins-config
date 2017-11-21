@@ -1,4 +1,9 @@
 ---
+- name: Install additional package on jenkins master
+  package:
+    name: "{{ item }}"
+  with_items: "{{ jenkins_master_pkgs }}"
+
 - include: tweaks.yml
 
 - include: config.yml
