@@ -33,6 +33,7 @@
         - "{{ jenkins_nginx_root }}"
     jenkins_plugins:
       - github
+      - github-branch-source
       - job-dsl
       - simple-theme-plugin
       - ssh-credentials
