@@ -4,14 +4,18 @@ jobs:
   ci:
     docker:
       - image: gcr.io/cloud-builders/docker
-    working_directory: ~/jenkins_config
+    working_directory: ~/freedomofpress.jenkinsconfig
     steps:
       - checkout
 
       - setup_remote_docker
 
       - run:
-          name: Install dependencies
+          name: Install package depedencies
+          command: apt-get install -y make python-pip
+
+      - run:
+          name: Install python dependencies
           command: pip install -r requirements.txt
 
       - run:
