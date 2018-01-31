@@ -114,11 +114,13 @@ jenkins_nginx_usercontent: |
 
 jenkins_master_pkgs: []
 
+jenkins_nginx_proxy_redirect: "default"
+
 jenkins_nginx_root: |
   location / {
     sendfile off;
     proxy_pass         http://127.0.0.1:8080;
-    proxy_redirect     default;
+    proxy_redirect     {{ jenkins_nginx_proxy_redirect }};
 
     proxy_set_header   Host              $host;
     proxy_set_header   X-Real-IP         $remote_addr;
