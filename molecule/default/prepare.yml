@@ -1,0 +1,32 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: False
+  pre_tasks:
+    - name: Install paxctld
+      apt:
+        name: paxctld
+
+    - name: Ensure java can execute
+      lineinfile:
+        line: "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java   m"
+        path: /etc/paxctld.conf
+
+    - name: Start paxctld in the background
+      shell: /etc/init.d/paxctld start
+      async: 1000
+      poll: 0
+
+    - name: openjdk install (should fail on grsec first round)
+      apt:
+        name: openjdk-8-jdk
+        state: present
+      no_log: yes
+      ignore_errors: true
+
+    - name: REstart paxctld in the background
+      shell: /etc/init.d/paxctld restart
+      async: 1000
+      poll: 0
+
+  become: yes

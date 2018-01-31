@@ -1,0 +1,39 @@
+---
+- name: Converge
+  hosts: all
+  pre_tasks:
+    - set_fact:
+        dkr_port: >
+          {{ lookup('pipe', "docker port jenkins_config_debian 8080").split(':')[1].rstrip() }}
+      tags: cfg
+
+  roles:
+    - role: freedomofpress.openssl-node
+      tags: ssl
+
+    - role: freedomofpress.jenkinsconfig
+      tags: cfg
+  post_tasks:
+    - name: Provide link to running local jenkins
+      debug:
+        msg: "You can navigate to Jenkins @ http://localhost:{{dkr_port}}"
+  vars:
+    java_packages:
+      - openjdk-8-jdk
+    nginx_sites:
+      default:
+        - listen 80
+        - "{{ jenkins_nginx_usercontent }}"
+        - "{{ jenkins_nginx_root }}"
+      encrypted:
+        - listen 443 ssl
+        - ssl_certificate /etc/ssl/certs/{{ ansible_fqdn }}.pem
+        - ssl_certificate_key /etc/ssl/private/{{ ansible_fqdn }}-key.pem
+        - "{{ jenkins_nginx_usercontent }}"
+        - "{{ jenkins_nginx_root }}"
+    jenkins_plugins:
+      - github
+      - simple-theme-plugin
+      - ssh-credentials
+      - workflow-aggregator
+    jenkins_plugin_timeout: 60

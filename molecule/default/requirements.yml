@@ -1,0 +1,10 @@
+---
+- name: geerlingguy.java
+  src: https://github.com/freedomofpress/ansible-role-java.git
+
+- name: geerlingguy.jenkins
+
+- src: jdauphant.nginx
+
+- name: freedomofpress.openssl-node
+  src: https://github.com/freedomofpress/ansible-role-openssl-node.git
