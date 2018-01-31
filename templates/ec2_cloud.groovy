@@ -56,7 +56,7 @@ def worker_ami = new SlaveTemplate(
   // String remoteAdmin
   "{{ worker.remoteadmin | default('') }}",
   // AMITypeData amiType
-  new UnixData(null, null),
+  new UnixData(null, null, '22'),
   // String jvmopts
   '',
   // boolean stopOnTerminate
@@ -73,6 +73,8 @@ def worker_ami = new SlaveTemplate(
   "{{ worker.instancecap | default(3) }}",
   // String iamInstanceProfile
   "{{ worker.profile_arn | default('') }}",
+  // boolean deleteRootOntermination
+  {{ worker.deleterootonterm|default(true)|bool|lower() }},
   // boolean useEphemeralDevices
   {{ worker.epehemeraldevices | default(false)| lower() }},
   // boolean useDedicatedTenancy
