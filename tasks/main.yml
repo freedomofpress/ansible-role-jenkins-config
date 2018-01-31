@@ -4,8 +4,8 @@
     name: "{{ item }}"
   with_items: "{{ jenkins_master_pkgs }}"
 
-- include: tweaks.yml
+- import_tasks: tweaks.yml
 
-- include: config.yml
+- import_tasks: config.yml
 
-- include: plugins.yml
+- import_tasks: plugins.yml
