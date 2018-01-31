@@ -1,0 +1,25 @@
+---
+version: 2
+jobs:
+  ci:
+    docker:
+      - image: gcr.io/cloud-builders/docker
+    working_directory: ~/jenkins_config
+    steps:
+      - checkout
+
+      - setup_remote_docker
+
+      - run:
+          name: Install dependencies
+          command: pip install -r requirements.txt
+
+      - run:
+          name: CI Go!
+          command: make
+
+workflows:
+  version: 2
+  tracker_ci:
+    jobs:
+      - ci
