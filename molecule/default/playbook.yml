@@ -38,3 +38,5 @@
       - ssh-credentials
       - workflow-aggregator
     jenkins_plugin_timeout: 60
+    # Dont normally want to do this in prod
+    jenkins_deploy_config_master_exe: 1
