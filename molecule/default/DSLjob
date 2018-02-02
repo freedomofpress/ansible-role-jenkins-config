@@ -1,0 +1,50 @@
+folder('TestFolder')
+
+pipelineJob('TestFolder/job1') {
+  description('Run a nightly job')
+  logRotator {
+    numToKeep(10)
+  }
+  label('builders')
+  triggers {
+    cron('@daily')
+  }
+  definition {
+    cpsScm {
+      scm {
+        git {
+                remote {
+                        github('freedomofpress/securedrop')
+                }
+            branch('develop')
+        }
+      }
+      scriptPath('NightlyPipeline')
+    }
+  }
+}
+
+pipelineJob('TestFolder/job2') {
+  description('Run another nightly job')
+  logRotator {
+    numToKeep(10)
+  }
+  label('builders')
+  triggers {
+    cron('@daily')
+  }
+  definition {
+    cpsScm {
+      scm {
+        git {
+                remote {
+                        github('freedomofpress/securedrop')
+                }
+            branch('develop')
+        }
+      }
+      scriptPath('NightlyPipeline2')
+    }
+  }
+}
+
