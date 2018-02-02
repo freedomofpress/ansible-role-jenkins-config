@@ -29,7 +29,7 @@
 
 - name: Remove github folder lock if a new groovy script dropped
   file:
-    path: "{{ jenkins_home }}/..disable-init_gh_folder"
+    path: "{{ jenkins_home }}/.disable-init_gh_folder"
     state: absent
   when: result_groovy.results[0].changed and jenkins_deploy_gh_folder
 
