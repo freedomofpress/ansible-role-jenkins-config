@@ -66,7 +66,7 @@ def worker_ami = new SlaveTemplate(
   // List<EC2Tag> tags
   ec2_tags,
   // String idleTerminationMinutes
-  '30',
+  '{{ worker.idle_terminate|default(30) }}',
   // boolean usePrivateDnsName
   {{ worker.usePrivateDns|default(false)|lower() }},
   // String instanceCapStr
