@@ -19,12 +19,12 @@ def worker_amis = []
 
 {% for worker in cloud.workers %}
 
-def ec2_tags = []
+def ec2_tags_{{loop.index}} = []
 {% for key, value in worker.ec2_tags|default([]) %}
-ec2_tags.add(new EC2Tag("{{ key }}", "{{ value }}"))
+ec2_tags_{{loop.index}}.add(new EC2Tag("{{ key }}", "{{ value }}"))
 {% endfor %}
 
-def worker_ami = new SlaveTemplate(
+def worker_ami_{{loop.index}} = new SlaveTemplate(
   // String ami
   "{{ worker.ami_id }}",
   // String zone
@@ -64,7 +64,7 @@ def worker_ami = new SlaveTemplate(
   // String subnetId
   "{{ worker.subnet_id | default('') }}",
   // List<EC2Tag> tags
-  ec2_tags,
+  ec2_tags_{{loop.index}},
   // String idleTerminationMinutes
   '{{ worker.idle_terminate|default(30) }}',
   // boolean usePrivateDnsName
@@ -91,7 +91,7 @@ def worker_ami = new SlaveTemplate(
   {{ worker.connectpublicip | default(false)| lower() }},
 )
 
-worker_amis.add(worker_ami)
+worker_amis.add(worker_ami_{{loop.index}})
 {% endfor %}
 
 
