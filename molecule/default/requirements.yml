@@ -1,5 +1,8 @@
 ---
-- src: geerlingguy.jenkins
+- name: geerlingguy.java
+  src: https://github.com/freedomofpress/ansible-role-java.git
+
+- name: geerlingguy.jenkins
 
 - src: jdauphant.nginx
 

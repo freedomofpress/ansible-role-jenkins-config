@@ -1,0 +1,40 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: jenkins_config_debian
+    image: debian:stretch
+    publish:
+      - 443
+      - 8080
+    expose:
+      - 443
+      - 8080
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+scenario:
+  name: default
+  converge_sequence:
+    - create
+    - prepare
+    - dependency
+    - prepare
+    - converge
+  test_sequence:
+    - destroy
+    - create
+    - prepare
+    - dependency
+    - converge
+    - idempotency
+    - verify
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

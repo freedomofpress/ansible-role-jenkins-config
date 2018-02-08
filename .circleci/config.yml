@@ -1,0 +1,29 @@
+---
+version: 2
+jobs:
+  ci:
+    docker:
+      - image: gcr.io/cloud-builders/docker
+    working_directory: ~/freedomofpress.jenkinsconfig
+    steps:
+      - checkout
+
+      - setup_remote_docker
+
+      - run:
+          name: Install package depedencies
+          command: apt-get install -y make python-pip
+
+      - run:
+          name: Install python dependencies
+          command: pip install -r requirements.txt
+
+      - run:
+          name: CI Go!
+          command: make
+
+workflows:
+  version: 2
+  tracker_ci:
+    jobs:
+      - ci

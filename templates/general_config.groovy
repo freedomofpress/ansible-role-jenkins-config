@@ -1,5 +1,6 @@
 import jenkins.model.*
 import jenkins.AgentProtocol
+import hudson.security.csrf.DefaultCrumbIssuer
 
 def instance = Jenkins.getInstance()
 instance.setNumExecutors({{ jenkins_deploy_config_master_exe }})
@@ -16,6 +17,10 @@ p.each { x ->
       p.remove(x)
     }
 }
+
+{% if jenkins_deploy_config_disablecrsf %}
+instance.setCrumbIssuer(new DefaultCrumbIssuer(true))
+{% endif %}
 
 
 instance.save()
