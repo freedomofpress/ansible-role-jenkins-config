@@ -1,6 +1,7 @@
 import hudson.model.*
 import jenkins.model.*
 import com.google.jenkins.plugins.computeengine.AcceleratorConfiguration
+import com.google.jenkins.plugins.computeengine.AutofilledNetworkConfiguration
 import com.google.jenkins.plugins.computeengine.ComputeEngineCloud
 import com.google.jenkins.plugins.computeengine.InstanceConfiguration
 import com.google.jenkins.plugins.computeengine.NetworkConfiguration
@@ -13,16 +14,8 @@ def worker_instances = []
 
 {% for worker in cloud.workers %}
 
-// I'm doing something here which Jenkins security doesnt like and had to whitelist
-// Ideally I'd like to find a proper work-around
-// See - https://jenkins.io/blog/2018/03/15/jep-200-lts/
-class GCENetConf extends NetworkConfiguration {
-    public GCENetConf(String network, String subnetwork) {
-        super(network, subnetwork)
-    }
-}
 
-def network_conf = new GCENetConf(
+def network_conf = new AutofilledNetworkConfiguration(
     // network
     "{{ worker.network|default('default') }}",
     // subnetwork
