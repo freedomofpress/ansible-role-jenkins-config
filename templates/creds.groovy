@@ -5,8 +5,14 @@ import com.cloudbees.plugins.credentials.domains.*
 import com.cloudbees.plugins.credentials.impl.*
 import org.jenkinsci.plugins.plaincredentials.impl.*
 import com.cloudbees.jenkins.plugins.sshcredentials.impl.*
-import hudson.plugins.sshslaves.*;
+import hudson.plugins.sshslaves.*
 import hudson.util.Secret
+import java.io.FileInputStream
+import org.apache.commons.fileupload.FileItem
+{% if jenkins_deploy_gce_keys -%}
+import com.google.jenkins.plugins.credentials.oauth.JsonServiceAccountConfig
+import com.google.jenkins.plugins.credentials.oauth.GoogleRobotPrivateKeyCredentials
+{% endif %}
 {% if jenkins_deploy_aws_keys -%}
 import com.cloudbees.jenkins.plugins.awscredentials.AWSCredentialsImpl
 {% endif %}
@@ -62,4 +68,20 @@ secretText = new StringCredentialsImpl(
     Secret.fromString("{{ key.secret }}"))
 
 store.addCredentials(domain, secretText)
+{% endfor %}
+
+{% for key in jenkins_deploy_gce_keys -%}
+// Google JSON store
+
+// file gets copied to the jenkins system out of band
+def filey = new FileInputStream('{{ jenkins_home }}/.gce/{{ key.project_id }}.json')
+
+// pretending to be a FileItem type and feeding in the appropriate methods :shhhh:
+fileItem = [ getSize: { return 1L }, getInputStream: { return filey } ] as FileItem
+
+def ServiceAccount = new JsonServiceAccountConfig(fileItem, null)
+
+def GoogleAccount = new GoogleRobotPrivateKeyCredentials("{{ key.project_id }}", ServiceAccount, null)
+
+store.addCredentials(domain, GoogleAccount)
 {% endfor %}

@@ -10,6 +10,7 @@
     - general_config
     - creds
     - "{{ 'ec2_cloud' if jenkins_deploy_ec2_clouds else 'skip' }}"
+    - "{{ 'gce_cloud' if jenkins_deploy_gce_clouds else 'skip' }}"
     - "{{ 'github_auth' if jenkins_deploy_gh_oauth else 'skip' }}"
     - "{{ 'slack' if jenkins_slack_settings else 'skip' }}"
     - "{{ jenkins_deploy_seed_groovy if jenkins_deploy_seed_template != '' else 'skip' }}"
@@ -44,13 +45,16 @@
   notify: restart jenkins
   with_items: "{{ jenkins_static_configs }}"
 
-- name: Ensure jenkins creds sshdirectory exists
+- name: Ensure jenkins creds directories exist
   file:
     state: directory
-    path: "{{ jenkins_home }}/.ssh/"
+    path: "{{ jenkins_home }}/{{ item }}/"
     owner: jenkins
     group: jenkins
     mode: 0700
+  with_items:
+    - .ssh
+    - .gce
 
 - name: Copy over any ssh config files
   copy:
@@ -62,3 +66,13 @@
   no_log: true
   register: register_copyssh
   with_items: "{{ jenkins_deploy_ssh_files }}"
+
+- name: Copy over contents of Google Compute JSON keys
+  copy:
+    content: "{{ item.json_contents }}"
+    dest: "{{ jenkins_home }}/.gce/{{ item.project_id }}.json"
+    owner: jenkins
+    group: jenkins
+    mode: 0700
+  no_log: true
+  with_items: "{{ jenkins_deploy_gce_keys }}"

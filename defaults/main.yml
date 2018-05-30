@@ -77,6 +77,10 @@ jenkins_slack_settings: {}
 
 jenkins_deploy_plugin_files: []
 
+jenkins_deploy_gce_keys: []
+#  - json_contents: "{{ service_key_json_contents }}"
+#    project_id: "project_name"
+
 #
 # Jenkins EC2 cloud builders
 ###############################################################
@@ -98,6 +102,28 @@ jenkins_deploy_ec2_clouds: []
 #        executors: 1
 #        remoteadmin: jenkins
 #        connectsshprocess: true
+
+
+#
+# Jenkins Google Compute Engine cloud builders
+#   *relies on 'google-compute-engine' installed as a plugin
+###############################################################
+jenkins_deploy_gce_clouds: []
+#  - name: MyGCECloud
+#    project: project-name
+#    credential_id: project-name
+#    instance_cap: 5
+#    region: us-west-1
+#    workers:
+#      - prefix: ci-
+#        description: CI builder
+#        region: us-west-1
+#        zone: us-west1-d
+#        type: n1-standard-1
+#        image_name: rhel-7-v20180522
+#        image_project: rhel-cloud
+#        disk_size: 20
+#        mode: exclusive
 
 #
 # nginx reverse proxy settings used in testing
@@ -157,7 +183,7 @@ jenkins_deploy_config_disablecrsf: true
 
 # This is upstream jenkins options we over-ride to provide additional CSRF
 # settings see https://wiki.jenkins.io/display/JENKINS/CSRF+Protection
-jenkins_java_options: "-Djenkins.install.runSetupWizard=false -Dhudson.security.csrf.requestfield=Jenkins-Crumb"
+jenkins_java_options: "-Djenkins.install.runSetupWizard=false -Dhudson.security.csrf.requestfield=Jenkins-Crumb -Dhudson.remoting.ClassFilter=GCENetConf"
 
 # Location of a user provided DSL template file to copy.
 # Requires that the jenkins job-dsl plugin is installed
