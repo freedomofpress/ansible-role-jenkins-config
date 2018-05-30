@@ -125,6 +125,8 @@ jenkins_deploy_gce_clouds: []
 #        disk_size: 20
 #        mode: exclusive
 
+google_compute_api_root: https://www.googleapis.com/compute/v1/projects
+
 #
 # nginx reverse proxy settings used in testing
 ###############################################################

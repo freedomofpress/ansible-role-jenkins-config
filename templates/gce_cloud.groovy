@@ -7,19 +7,20 @@ import com.google.jenkins.plugins.computeengine.InstanceConfiguration
 import com.google.jenkins.plugins.computeengine.NetworkConfiguration
 
 def instance = Jenkins.getInstance()
-
 {% for cloud in jenkins_deploy_gce_clouds %}
 
 def worker_instances = []
 
 {% for worker in cloud.workers %}
 
+{% set API_ROOT = google_compute_api_root + '/' + cloud.project %}
+{% set API_ZONE_ROOT = API_ROOT + '/zones/' + worker.zone %}
 
 def network_conf = new AutofilledNetworkConfiguration(
     // network
-    "{{ worker.network|default('default') }}",
+    "{{ API_ROOT }}/global/networks/default",
     // subnetwork
-    "{{ worker.subnetwork|default('default') }}"
+    "default"
 )
 
 // Dont need to support this now personally
@@ -31,11 +32,11 @@ def worker_gce = new InstanceConfiguration(
   // instance prefix name
   "{{ worker.prefix|default('jenkins-') }}",
   // region
-  "{{ worker.region }}",
+  "{{ API_ROOT }}/regions/{{ worker.region }}",
   // zone
-  "{{ worker.zone }}",
+  "{{ API_ZONE_ROOT }}",
   // machine type
-  "{{ worker.type }}",
+  "{{ API_ZONE_ROOT }}/machineTypes/{{ worker.type }}",
   // number of executors
   "{{ worker.executors|default(1) }}",
   // startupscript
@@ -47,11 +48,11 @@ def worker_gce = new InstanceConfiguration(
   // description
   "{{ worker.description }}",
   // bootdisk type
-  "{{ worker.disktype | default('pd-standard') }}",
+  "{{ API_ZONE_ROOT }}/diskTypes/{{ worker.disktype | default('pd-standard') }}",
   // bootdisk autodelete
   {{ worker.autodelete|default(true)|bool|lower }},
   // String source image name
-  "{{ worker.image_name }}",
+  "{{ API_ROOT }}/global/images/{{ worker.image_name }}",
   // String source image project
   "{{ worker.image_project }}",
   // Bootdisk GB size
