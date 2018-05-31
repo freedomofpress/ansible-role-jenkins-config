@@ -77,6 +77,10 @@ jenkins_slack_settings: {}
 
 jenkins_deploy_plugin_files: []
 
+jenkins_deploy_gce_keys: []
+#  - json_contents: "{{ service_key_json_contents }}"
+#    project_id: "project_name"
+
 #
 # Jenkins EC2 cloud builders
 ###############################################################
@@ -98,6 +102,30 @@ jenkins_deploy_ec2_clouds: []
 #        executors: 1
 #        remoteadmin: jenkins
 #        connectsshprocess: true
+
+
+#
+# Jenkins Google Compute Engine cloud builders
+#   *relies on 'google-compute-engine' installed as a plugin
+###############################################################
+jenkins_deploy_gce_clouds: []
+#  - name: MyGCECloud
+#    project: project-name
+#    credential_id: project-name
+#    instance_cap: 5
+#    region: us-west-1
+#    workers:
+#      - prefix: ci-
+#        description: CI builder
+#        region: us-west-1
+#        zone: us-west1-d
+#        type: n1-standard-1
+#        image_name: rhel-7-v20180522
+#        image_project: rhel-cloud
+#        disk_size: 20
+#        mode: exclusive
+
+google_compute_api_root: https://www.googleapis.com/compute/v1/projects
 
 #
 # nginx reverse proxy settings used in testing
