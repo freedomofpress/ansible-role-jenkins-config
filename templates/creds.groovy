@@ -18,7 +18,22 @@ import com.cloudbees.jenkins.plugins.awscredentials.AWSCredentialsImpl
 {% endif %}
 
 domain = Domain.global()
-store = Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0].getStore()
+systemCredProvider = SystemCredentialsProvider.instance
+existing_sys_creds = systemCredProvider.credentials
+
+def update_or_add_creds(Credentials user_provided_creds) {
+    provided_id = user_provided_creds.id
+    existing_creds = existing_sys_creds.find { it.id == provided_id }
+
+    if(existing_creds) {
+        println "Updating key $provided_id"
+        systemCredProvider.updateCredentials(domain, existing_creds, user_provided_creds)
+    } else {
+        println "Creating key $provided_id"
+        systemCredProvider.addCredentials(domain, user_provided_creds)
+    }
+
+}
 
 {% for key in jenkins_deploy_ssh_files %}
 // SSH KEYS
@@ -30,7 +45,7 @@ privateKey = new BasicSSHUserPrivateKey(
     "{{ key.passphrase | default('') }}",
     "{{ key.description | default('') }}"
 )
-store.addCredentials(domain, privateKey)
+update_or_add_creds(privateKey)
 {% endfor %}
 
 {% for key in jenkins_deploy_aws_keys %}
@@ -44,7 +59,7 @@ aws_cred = new AWSCredentialsImpl(
     "",
     ""
 )
-store.addCredentials(domain, aws_cred)
+update_or_add_creds(aws_cred)
 {% endfor %}
 
 {% for key in jenkins_deploy_userpass_creds %}
@@ -56,7 +71,7 @@ userandpass = new UsernamePasswordCredentialsImpl(
     "{{ key.username | default('') }}",
     "{{ key.password }}"
 )
-store.addCredentials(domain, userandpass)
+update_or_add_creds(userandpass)
 {% endfor %}
 
 {% for key in jenkins_deploy_secret_creds %}
@@ -67,7 +82,7 @@ secretText = new StringCredentialsImpl(
     "{{ key.desc }}",
     Secret.fromString("{{ key.secret }}"))
 
-store.addCredentials(domain, secretText)
+update_or_add_creds(secretText)
 {% endfor %}
 
 {% for key in jenkins_deploy_gce_keys -%}
@@ -83,5 +98,5 @@ def ServiceAccount = new JsonServiceAccountConfig(fileItem, null)
 
 def GoogleAccount = new GoogleRobotPrivateKeyCredentials("{{ key.project_id }}", ServiceAccount, null)
 
-store.addCredentials(domain, GoogleAccount)
+update_or_add_creds(GoogleAccount)
 {% endfor %}
