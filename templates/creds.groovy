@@ -37,11 +37,12 @@ def update_or_add_creds(Credentials user_provided_creds) {
 
 {% for key in jenkins_deploy_ssh_files %}
 // SSH KEYS
+String sshKey = new File("{{jenkins_home}}/.ssh/{{key.keyname}}").text
 privateKey = new BasicSSHUserPrivateKey(
     CredentialsScope.GLOBAL,
     "{{ key.keyname }}",
     "{{ key.username }}",
-    new BasicSSHUserPrivateKey.FileOnMasterPrivateKeySource("{{jenkins_home}}/.ssh/{{key.keyname}}"),
+    new BasicSSHUserPrivateKey.DirectEntryPrivateKeySource(sshKey),
     "{{ key.passphrase | default('') }}",
     "{{ key.description | default('') }}"
 )
