@@ -56,7 +56,7 @@ def worker_ami_{{loop.index}} = new SlaveTemplate(
   // String remoteAdmin
   "{{ worker.remoteadmin | default('') }}",
   // AMITypeData amiType
-  new UnixData(null, null, '22'),
+  new UnixData(null, null, null, '22'),
   // String jvmopts
   '',
   // boolean stopOnTerminate
@@ -109,7 +109,11 @@ def new_cloud = new AmazonEC2Cloud(
   // String instanceCapStr
   "{{ cloud.instance_cap }}",
   // List<? extends SlaveTemplate> templates
-  worker_amis
+  worker_amis,
+  // role arn
+  "{{ cloud.role_arn|default('') }}",
+  // role session name
+  "{{ cloud.session_name|default('') }}"
 )
 
 def cloudList = instance.clouds
