@@ -43,6 +43,9 @@ def worker_gce = new InstanceConfiguration(
   """{{ worker.startup_script|default('') }}""",
   // preemptible VM ? (cheaper but can be terminated at will)
   {{ worker.preemptible|default(false)|bool|lower }},
+  // min cpu platform
+  // https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform
+  "{{ worker.min_cpu_platform|default('') }}",
   // labels (for jenkins internal usage)
   "{{ worker.labels|default([])|join(" ") }}",
   // description
