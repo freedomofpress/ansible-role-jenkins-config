@@ -5,14 +5,12 @@
 #    pip-compile --output-file requirements.txt requirements.in
 #
 ansible-lint==3.4.23      # via molecule
-ansible==2.4.6.0
+ansible==2.6.18
 anyconfig==0.9.4          # via molecule
 arrow==0.12.1             # via jinja2-time
 asn1crypto==0.24.0        # via cryptography
 atomicwrites==1.1.5       # via pytest
 attrs==18.1.0             # via pytest
-backports.functools-lru-cache==1.5  # via arrow
-backports.ssl-match-hostname==3.5.0.1  # via docker
 bcrypt==3.1.4             # via paramiko
 binaryornot==0.4.4        # via cookiecutter
 cerberus==1.2             # via molecule
@@ -22,21 +20,17 @@ chardet==3.0.4            # via binaryornot, requests
 click-completion==0.3.1   # via molecule
 click==6.7                # via click-completion, cookiecutter, molecule, pip-tools, python-gilt, safety
 colorama==0.3.9           # via molecule, python-gilt
-configparser==3.5.0       # via flake8
 cookiecutter==1.6.0       # via molecule
 cryptography==2.3         # via ansible, paramiko
 docker-pycreds==0.3.0     # via docker
 docker==3.4.1
 dparse==0.4.1             # via safety
-enum34==1.1.6             # via cryptography, flake8
 fasteners==0.14.1         # via python-gilt
 first==2.0.1              # via pip-tools
 flake8==3.5.0             # via molecule
-funcsigs==1.0.2           # via pytest
 future==0.16.0            # via cookiecutter
 git-url-parse==1.1.0      # via python-gilt
 idna==2.7                 # via cryptography, requests
-ipaddress==1.0.22         # via cryptography, docker
 jinja2-time==0.2.0        # via cookiecutter
 jinja2==2.10              # via ansible, click-completion, cookiecutter, jinja2-time, molecule
 markupsafe==1.0           # via jinja2
